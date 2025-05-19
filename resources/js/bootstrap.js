@@ -4,11 +4,18 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-window.axios = axios;
+import axios from 'axios'
+import { InertiaProgress } from '@inertiajs/progress'
+
+// BaseURL y credenciales de Sanctum si lo usas
+axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.withCredentials = true
+
+InertiaProgress.init()
+/**window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+**/
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
