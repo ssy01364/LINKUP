@@ -2,11 +2,15 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductImagen;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\SectorSeeder;
+use Database\Seeders\ServicioSeeder;
+// use Database\Seeders\UsuarioSeeder;
+// use Database\Seeders\EmpresaSeeder;
+// use Database\Seeders\DisponibilidadSeeder;
+// use Database\Seeders\CitaSeeder;
+// use Database\Seeders\ValoracionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,16 +19,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        Category::factory(5)->create();
-        Product::factory(50)
-            ->has(ProductImagen::factory()->count(3))
-            ->create();
+        // Llama a cada uno de tus seeders en el orden adecuado.
+        $this->call([
+            RoleSeeder::class,
+            SectorSeeder::class,
+            ServicioSeeder::class,
+            // Cuando los hayas creado, descomenta estas líneas:
+            // UsuarioSeeder::class,
+            // EmpresaSeeder::class,
+            // DisponibilidadSeeder::class,
+            // CitaSeeder::class,
+            // ValoracionSeeder::class,
+        ]);
     }
 }
