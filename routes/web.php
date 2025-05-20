@@ -14,10 +14,10 @@ use App\Http\Controllers\ClienteController;
 |
 */
 
-// Página de inicio
-Route::view('/', 'welcome')->name('welcome');
+// Redirige la raíz (/) directamente al formulario de login
+Route::redirect('/', '/login');
 
-// Rutas de autenticación (web)
+// Rutas de autenticación (web) para invitados
 Route::middleware('guest')->group(function () {
     Route::get('login',    [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login',   [AuthController::class, 'login']);
@@ -30,29 +30,30 @@ Route::post('logout', [AuthController::class, 'logout'])
      ->middleware('auth')
      ->name('logout');
 
-// Ruta /home redirige al dashboard de cliente
+// Ruta /home redirige al buscador de cliente
 Route::get('/home', function () {
     return redirect()->route('cliente.search.form');
-})->middleware(['auth', 'role:cliente'])->name('home');
+})->middleware(['auth', 'role:cliente'])
+  ->name('home');
 
-// Panel Cliente (solo accesible si estás autenticado y eres cliente)
+// Panel Cliente (autenticado y con rol "cliente")
 Route::middleware(['auth', 'role:cliente'])
      ->prefix('cliente')
      ->name('cliente.')
      ->group(function () {
-         // 1. Formulario de búsqueda
-         Route::get('buscar', [ClienteController::class, 'searchForm'])
-              ->name('search.form');
+         // Formulario de búsqueda
+         Route::get('buscar',     [ClienteController::class, 'searchForm'])
+                                ->name('search.form');
 
-         // 2. Resultados de búsqueda
+         // Resultados de búsqueda
          Route::get('resultados', [ClienteController::class, 'search'])
-              ->name('search.results');
+                                ->name('search.results');
 
-         // 3. Ver disponibilidad de una empresa
+         // Disponibilidad de una empresa
          Route::get('empresa/{empresa}/slots', [ClienteController::class, 'availability'])
-              ->name('availability');
+                                ->name('availability');
 
-         // 4. Reservar un slot
-         Route::post('reservar', [ClienteController::class, 'book'])
-              ->name('book');
+         // Reservar un slot
+         Route::post('reservar',  [ClienteController::class, 'book'])
+                                ->name('book');
      });
