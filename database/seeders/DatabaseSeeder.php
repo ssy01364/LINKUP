@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
             SectorSeeder::class,
             ServicioSeeder::class,
             // Cuando los hayas creado, descomenta estas líneas:
-            // UsuarioSeeder::class,
-            // EmpresaSeeder::class,
-            // DisponibilidadSeeder::class,
+             UsuarioSeeder::class,
+             EmpresaSeeder::class,
+             DisponibilidadSeeder::class,
             // CitaSeeder::class,
             // ValoracionSeeder::class,
         ]);
