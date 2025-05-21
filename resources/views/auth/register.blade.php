@@ -35,6 +35,26 @@
         @enderror
       </div>
 
+      {{-- Selector de rol --}}
+      <div class="mb-3">
+        <label for="role_id" class="form-label">Tipo de cuenta</label>
+        <select name="role_id"
+                id="role_id"
+                class="form-select @error('role_id') is-invalid @enderror"
+                required>
+          <option value="">— Selecciona un rol —</option>
+          @foreach($roles as $role)
+            <option value="{{ $role->id }}"
+              {{ old('role_id') == $role->id ? 'selected' : '' }}>
+              {{ ucfirst($role->nombre) }}
+            </option>
+          @endforeach
+        </select>
+        @error('role_id')
+          <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+      </div>
+
       <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
         <input type="password"

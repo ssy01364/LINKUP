@@ -1,8 +1,11 @@
 <?php
+// app/Http/Controllers/AuthController.php
 
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use App\Models\Role;
+use App\Models\Empresa;            // ← Importa Empresa
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -22,7 +25,9 @@ class AuthController extends Controller
      */
     public function showRegisterForm()
     {
-        return view('auth.register');
+        // Pasamos los roles "cliente" y "empresa" al formulario
+        $roles = Role::whereIn('nombre', ['cliente', 'empresa'])->get();
+        return view('auth.register', compact('roles'));
     }
 
     /**
@@ -56,23 +61,42 @@ class AuthController extends Controller
 
         // ——— Lógica Web ———
         $data = $request->validate([
-            'nombre'                => 'required|string|max:100',
-            'email'                 => 'required|string|email|unique:usuarios,email',
-            'password'              => 'required|string|min:6|confirmed',
+            'nombre'     => 'required|string|max:100',
+            'email'      => 'required|string|email|unique:usuarios,email',
+            'password'   => 'required|string|min:6|confirmed',
+            'role_id'    => 'required|exists:roles,id',
         ]);
 
-        // Creación como cliente (role_id = 1)
+        // 1) Creamos el usuario
         $user = Usuario::create([
             'nombre'        => $data['nombre'],
             'email'         => $data['email'],
             'password_hash' => Hash::make($data['password']),
-            'role_id'       => 1,
+            'role_id'       => $data['role_id'],
         ]);
 
+        // 2) Si es empresa, creamos automáticamente su perfil en empresas
+        if ($user->role->nombre === 'empresa') {
+            $user->empresa()->create([
+                // Laravel rellenará usuario_id por la relación
+                'sector_id'   => 1,              // sector por defecto (ajusta si lo necesitas)
+                'nombre'      => $user->nombre,
+                'descripcion' => '',
+                'direccion'   => '',
+                'telefono'    => '',
+            ]);
+        }
+
+        // 3) Loguear y regenerar sesión
         auth()->login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended('/cliente/buscar');
+        // 4) Redirigir según rol
+        if ($user->role->nombre === 'empresa') {
+            return redirect()->route('empresa.dashboard');
+        }
+
+        return redirect()->route('cliente.search.form');
     }
 
     /**
@@ -94,7 +118,6 @@ class AuthController extends Controller
                 ]);
             }
 
-            // opcional: $user->tokens()->delete();
             $token = $user->createToken('api-token')->plainTextToken;
 
             return response()->json([
@@ -116,7 +139,14 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
-        return redirect()->intended('/cliente/buscar');
+
+        // Redirige según rol
+        $role = auth()->user()->role->nombre;
+        if ($role === 'empresa') {
+            return redirect()->route('empresa.dashboard');
+        }
+
+        return redirect()->route('cliente.search.form');
     }
 
     /**
@@ -125,15 +155,14 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         if ($request->is('api/*')) {
-            // ——— Lógica API ———
             $request->user()->currentAccessToken()->delete();
             return response()->json(['message' => 'Logout completado'], 200);
         }
 
-        // ——— Lógica Web ———
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/');
     }
 }

@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+// Importa los demás modelos usados en las relaciones
+use App\Models\Usuario;
+use App\Models\Sector;
+use App\Models\Servicio;
+use App\Models\Disponibilidad;
+use App\Models\Cita;
+
 class Empresa extends Model
 {
     use HasFactory;
