@@ -1,41 +1,79 @@
 <?php
+// app/Http/Controllers/Empresa/DisponibilidadController.php
+
 namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Disponibilidad;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DisponibilidadController extends Controller
 {
+    /**
+     * GET /empresa/disponibilidades
+     */
     public function index()
     {
-        $slots = auth()->user()->empresa->disponibilidades;
+        // Trae únicamente los slots de la empresa logueada, ordenados por inicio
+        $slots = Auth::user()
+                     ->empresa
+                     ->disponibilidades()
+                     ->orderBy('inicio')
+                     ->get();
+
         return view('empresa.disponibilidades.index', compact('slots'));
     }
 
+    /**
+     * GET /empresa/disponibilidades/create
+     */
     public function create()
     {
         return view('empresa.disponibilidades.create');
     }
 
-    public function store(Request $r)
+    /**
+     * POST /empresa/disponibilidades
+     */
+    public function store(Request $request)
     {
-        $r->validate([
-          'inicio'=>'required|date|after:now',
-          'fin'   =>'required|date|after:inicio',
+        $request->validate([
+            'inicio' => 'required|date',
+            'fin'    => 'required|date|after:inicio',
         ]);
 
-        auth()->user()->empresa
+        // Crea el nuevo slot en la empresa del usuario autenticado
+        Auth::user()
+            ->empresa
             ->disponibilidades()
-            ->create($r->only('inicio','fin')+['disponible'=>true]);
+            ->create([
+                'inicio'     => $request->input('inicio'),
+                'fin'        => $request->input('fin'),
+                'disponible' => true,
+            ]);
 
-        return redirect()->route('empresa.disponibilidades.index')
-                         ->with('success','Slot añadido');
+        return redirect()
+               ->route('empresa.disponibilidades.index')
+               ->with('success', 'Slot añadido correctamente.');
     }
 
-    public function destroy(Disponibilidad $disponibilidad)
+    /**
+     * DELETE /empresa/disponibilidades/{id}
+     */
+    public function destroy($id)
     {
-        $disponibilidad->delete();
-        return back()->with('success','Slot eliminado');
+        // Buscamos el slot asegurándonos de que pertenezca a la empresa del usuario
+        $slot = Auth::user()
+                    ->empresa
+                    ->disponibilidades()
+                    ->findOrFail($id);
+
+        // Lo eliminamos
+        $slot->delete();
+
+        return redirect()
+               ->route('empresa.disponibilidades.index')
+               ->with('success', 'Slot eliminado correctamente.');
     }
 }

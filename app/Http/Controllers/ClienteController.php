@@ -1,13 +1,15 @@
 <?php
+// app/Http/Controllers/ClienteController.php
 
 namespace App\Http\Controllers;
 
 use App\Models\Sector;
 use App\Models\Servicio;
 use App\Models\Empresa;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Disponibilidad;
 use App\Models\Cita;
-use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
@@ -35,10 +37,10 @@ class ClienteController extends Controller
 
         $empresas = Empresa::with('servicios')
             ->when($request->sector_id, function($q, $sectorId) {
-                return $q->where('sector_id', $sectorId);
+                $q->where('sector_id', $sectorId);
             })
             ->when($request->servicios, function($q, $servicios) {
-                return $q->whereHas('servicios', function($q2) use ($servicios) {
+                $q->whereHas('servicios', function($q2) use ($servicios) {
                     $q2->whereIn('servicio_id', $servicios);
                 });
             })
@@ -52,9 +54,11 @@ class ClienteController extends Controller
      */
     public function availability(Empresa $empresa)
     {
+        // Traemos solo los slots disponibles
         $slots = $empresa
             ->disponibilidades()
             ->where('disponible', true)
+            ->orderBy('inicio')
             ->get();
 
         return view('cliente.availability', compact('empresa', 'slots'));
@@ -71,14 +75,14 @@ class ClienteController extends Controller
             'slot_id'     => 'required|exists:disponibilidad,id',
         ]);
 
-        // Recupera el slot y verifica que sigue libre
+        // Recupera el slot y verifica que siga libre
         $slot = Disponibilidad::where('id', $data['slot_id'])
             ->where('disponible', true)
             ->firstOrFail();
 
         // Crea la cita
         Cita::create([
-            'cliente_id'   => auth()->id(),
+            'cliente_id'   => Auth::id(),
             'empresa_id'   => $data['empresa_id'],
             'servicio_id'  => $data['servicio_id'],
             'fecha_inicio' => $slot->inicio,

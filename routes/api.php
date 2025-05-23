@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\DisponibilidadController;
+use App\Http\Controllers\Api\DisponibilidadController;   // ← apunta aquí
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ValoracionController;
 

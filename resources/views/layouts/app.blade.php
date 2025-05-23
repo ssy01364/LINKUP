@@ -11,11 +11,8 @@
     rel="stylesheet"
   >
 
-  {{-- FullCalendar CSS CDN (si lo vas a usar en alguna vista) --}}
-  <link
-    href="https://cdn.jsdelivr.net/npm/fullcalendar@6/main.min.css"
-    rel="stylesheet"
-  >
+  {{-- Aquí pueden inyectarse estilos adicionales por vista --}}
+  @stack('styles')
 </head>
 <body>
   @include('partials.navbar')
@@ -30,12 +27,7 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"
   ></script>
 
-  {{-- FullCalendar JS CDN --}}
-  <script
-    src="https://cdn.jsdelivr.net/npm/fullcalendar@6/main.min.js"
-  ></script>
-
-  {{-- Aquí puedes inyectar scripts específicos de cada vista --}}
+  {{-- Aquí pueden inyectarse scripts adicionales por vista --}}
   @stack('scripts')
 </body>
 </html>
