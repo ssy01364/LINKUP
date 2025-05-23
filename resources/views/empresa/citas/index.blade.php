@@ -5,6 +5,11 @@
 @section('content')
   <h1 class="mb-4">Citas Recibidas</h1>
 
+  {{-- Mensajes flash --}}
+  @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+  @endif
+
   <table class="table table-bordered">
     <thead class="table-light">
       <tr>

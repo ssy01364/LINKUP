@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\Empresa\DashboardController   as EmpresaDash;
 use App\Http\Controllers\Empresa\DisponibilidadController as EmpresaDisp;
 use App\Http\Controllers\Empresa\CitaController        as EmpresaCita;
+use App\Http\Controllers\Empresa\ProfileController    as EmpresaProfile; // ← Añadido
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +15,14 @@ use App\Http\Controllers\Empresa\CitaController        as EmpresaCita;
 |
 | Aquí defines las rutas que responden con vistas Blade para tu aplicación
 | web. Incluye autenticación, la ruta /home, el panel de cliente
-| y el panel de empresa.
+| y el panel de empresa (disponibilidades, citas y perfil).
 |
 */
 
-// 1) Redirige la raíz (/) directamente al login
+// 1) Redirige la raíz (/) al login
 Route::redirect('/', '/login');
 
-// 2) Rutas de autenticación (login & register) — solo para invitados
+// 2) Autenticación — solo para invitados
 Route::middleware('guest')->group(function () {
     Route::get('login',    [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login',   [AuthController::class, 'login']);
@@ -34,7 +35,7 @@ Route::post('logout', [AuthController::class, 'logout'])
      ->middleware('auth')
      ->name('logout');
 
-// 4) Ruta /home — tras login/redirección según rol
+// 4) /home — redirige tras login según rol
 Route::get('/home', function () {
     $user = auth()->user();
 
@@ -47,36 +48,24 @@ Route::get('/home', function () {
     }
 
     abort(403, 'No tienes permiso para acceder.');
-})->middleware('auth')
-  ->name('home');
+})->middleware('auth')->name('home');
 
 /*
 |--------------------------------------------------------------------------
 | Panel Cliente
 |--------------------------------------------------------------------------
-|
-| Rutas accesibles únicamente para usuarios con rol "cliente"
-| Prefijo: /cliente
-| Nombre de ruta: cliente.*
-|
+| Prefijo: /cliente — Rol: cliente
 */
 Route::middleware(['auth', 'role:cliente'])
      ->prefix('cliente')
      ->name('cliente.')
      ->group(function () {
-         // 1. Formulario de búsqueda
          Route::get('buscar',     [ClienteController::class, 'searchForm'])
                                 ->name('search.form');
-
-         // 2. Resultados de búsqueda
          Route::get('resultados', [ClienteController::class, 'search'])
                                 ->name('search.results');
-
-         // 3. Ver disponibilidad de empresa
          Route::get('empresa/{empresa}/slots', [ClienteController::class, 'availability'])
                                 ->name('availability');
-
-         // 4. Reservar un slot
          Route::post('reservar',  [ClienteController::class, 'book'])
                                 ->name('book');
      });
@@ -85,25 +74,27 @@ Route::middleware(['auth', 'role:cliente'])
 |--------------------------------------------------------------------------
 | Panel Empresa
 |--------------------------------------------------------------------------
-|
-| Rutas accesibles únicamente para usuarios con rol "empresa"
-| Prefijo: /empresa
-| Nombre de ruta: empresa.*
-|
+| Prefijo: /empresa — Rol: empresa
 */
 Route::middleware(['auth', 'role:empresa'])
      ->prefix('empresa')
      ->name('empresa.')
      ->group(function () {
-         // a) Dashboard de empresa
+         // a) Dashboard
          Route::get('dashboard', [EmpresaDash::class, 'index'])
               ->name('dashboard');
 
-         // b) CRUD de disponibilidades: index, create, store, destroy
+         // b) Perfil de empresa
+         Route::get('profile', [EmpresaProfile::class, 'edit'])
+              ->name('profile.edit');
+         Route::put('profile', [EmpresaProfile::class, 'update'])
+              ->name('profile.update');
+
+         // c) CRUD disponibilidades (index, create, store, destroy)
          Route::resource('disponibilidades', EmpresaDisp::class)
               ->only(['index', 'create', 'store', 'destroy']);
 
-         // c) Gestión de citas
+         // d) Gestión de citas: listar, confirmar y cancelar
          Route::get('citas',                        [EmpresaCita::class, 'index'])
               ->name('citas.index');
          Route::patch('citas/{cita}/confirmar',     [EmpresaCita::class, 'confirmar'])

@@ -1,11 +1,12 @@
+{{-- resources/views/empresa/dashboard.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Dashboard Empresa')
 
 @section('content')
-  <h1 class="mb-4">Bienvenido, {{ auth()->user()->nombre }}</h1>
+  <h1 class="mb-4">Bienvenido, {{ auth()->user()->empresa->nombre }}</h1>
 
-  <div class="row">
+  <div class="row mb-4">
     <div class="col-md-6">
       <div class="card text-white bg-primary mb-3">
         <div class="card-header">Total de citas</div>
@@ -24,10 +25,17 @@
     </div>
   </div>
 
-  <a href="{{ route('empresa.disponibilidades.index') }}" class="btn btn-success me-2">
-    Gestionar Disponibilidades
-  </a>
-  <a href="{{ route('empresa.citas.index') }}" class="btn btn-secondary">
-    Ver Citas
-  </a>
+  <div class="d-flex gap-2">
+    <a href="{{ route('empresa.disponibilidades.index') }}" class="btn btn-success">
+      Gestionar Disponibilidades
+    </a>
+
+    <a href="{{ route('empresa.citas.index') }}" class="btn btn-secondary">
+      Ver Citas
+    </a>
+
+    <a href="{{ route('empresa.profile.edit') }}" class="btn btn-outline-primary">
+      Editar Perfil
+    </a>
+  </div>
 @endsection
