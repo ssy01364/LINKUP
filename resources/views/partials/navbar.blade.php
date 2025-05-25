@@ -24,6 +24,11 @@
               Buscar
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('cliente.reservas.index') }}">
+              Mis Reservas
+            </a>
+          </li>
         @endif
 
         @if($rol === 'empresa')

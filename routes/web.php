@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\Cliente\ReservaController as ClienteReserva;  // ← Nuevo
 use App\Http\Controllers\Empresa\DashboardController   as EmpresaDash;
 use App\Http\Controllers\Empresa\DisponibilidadController as EmpresaDisp;
 use App\Http\Controllers\Empresa\CitaController        as EmpresaCita;
-use App\Http\Controllers\Empresa\ProfileController    as EmpresaProfile; // ← Añadido
+use App\Http\Controllers\Empresa\ProfileController    as EmpresaProfile;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use App\Http\Controllers\Empresa\ProfileController    as EmpresaProfile; // ← 
 |
 | Aquí defines las rutas que responden con vistas Blade para tu aplicación
 | web. Incluye autenticación, la ruta /home, el panel de cliente
-| y el panel de empresa (disponibilidades, citas y perfil).
+| y el panel de empresa (disponibilidades, citas, perfil).
 |
 */
 
@@ -60,14 +61,25 @@ Route::middleware(['auth', 'role:cliente'])
      ->prefix('cliente')
      ->name('cliente.')
      ->group(function () {
+         // 1. Formulario de búsqueda
          Route::get('buscar',     [ClienteController::class, 'searchForm'])
                                 ->name('search.form');
+         // 2. Resultados de búsqueda
          Route::get('resultados', [ClienteController::class, 'search'])
                                 ->name('search.results');
+         // 3. Ver disponibilidad de empresa
          Route::get('empresa/{empresa}/slots', [ClienteController::class, 'availability'])
                                 ->name('availability');
+         // 4. Reservar un slot
          Route::post('reservar',  [ClienteController::class, 'book'])
                                 ->name('book');
+
+         // 5. Mis Reservas — listado
+         Route::get('reservas', [ClienteReserva::class, 'index'])
+              ->name('reservas.index');
+         // 6. Mis Reservas — cancelar propia
+         Route::patch('reservas/{cita}/cancelar', [ClienteReserva::class, 'cancel'])
+              ->name('reservas.cancelar');
      });
 
 /*
