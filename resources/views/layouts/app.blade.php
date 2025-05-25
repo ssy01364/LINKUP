@@ -1,3 +1,4 @@
+{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +19,10 @@
   @include('partials.navbar')
 
   <div class="container py-4">
+    {{-- Mensajes flash --}}
     @include('partials.alerts')
+
+    {{-- Contenido de cada vista --}}
     @yield('content')
   </div>
 

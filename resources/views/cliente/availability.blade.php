@@ -1,14 +1,10 @@
+{{-- resources/views/cliente/availability.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Disponibilidad')
 
 @section('content')
   <h1>Disponibilidad de {{ $empresa->nombre }}</h1>
-
-  {{-- Mensajes de éxito/error --}}
-  @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-  @endif
 
   {{-- Si la empresa no tiene servicios --}}
   @if($empresa->servicios->isEmpty())
@@ -46,18 +42,14 @@
                 <td class="text-end">
                   <form action="{{ route('cliente.book') }}" method="POST" class="d-inline">
                     @csrf
-                    {{-- Empresa --}}
                     <input type="hidden" name="empresa_id" value="{{ $empresa->id }}">
-                    {{-- Slot --}}
                     <input type="hidden" name="slot_id"      value="{{ $slot->id }}">
 
                     @if($empresa->servicios->count() === 1)
-                      {{-- Si sólo hay un servicio, lo mandamos oculto --}}
                       <input type="hidden"
                              name="servicio_id"
                              value="{{ $empresa->servicios->first()->id }}">
                     @else
-                      {{-- Si hay varios, mostramos un select --}}
                       <div class="mb-2">
                         <select name="servicio_id"
                                 class="form-select form-select-sm"
@@ -88,8 +80,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     let calendarEl = document.getElementById('calendar');
-
-    // Crear array de eventos
     let events = [
       @foreach($slots as $slot)
       {

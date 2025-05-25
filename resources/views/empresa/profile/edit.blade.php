@@ -1,14 +1,10 @@
+{{-- resources/views/empresa/profile/edit.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Editar Perfil')
+@section('title', 'Editar Perfil de Empresa')
 
 @section('content')
-  <h1 class="mb-4">Editar Perfil de Empresa</h1>
-
-  {{-- Mensaje flash --}}
-  @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-  @endif
+  <h1 class="mb-4">Editar Perfil de {{ $empresa->nombre }}</h1>
 
   <form action="{{ route('empresa.profile.update') }}" method="POST">
     @csrf
