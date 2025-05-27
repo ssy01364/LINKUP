@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Servicio extends Model
 {
@@ -22,15 +23,14 @@ class Servicio extends Model
     {
         return $this->belongsToMany(
             Empresa::class,
-            'empresas_servicios',
-            'servicio_id',
-            'empresa_id'
+            'empresas_servicios',  // tabla pivote
+            'servicio_id',         // FK pivote → this servicio
+            'empresa_id'           // FK pivote → empresas
         );
     }
 
-    public function citas(): BelongsToMany
+    public function citas(): HasMany
     {
-        // Aunque la cita guarda servicio_id, a veces conviene acceder
         return $this->hasMany(Cita::class, 'servicio_id');
     }
 }

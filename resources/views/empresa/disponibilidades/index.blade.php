@@ -1,14 +1,10 @@
+{{-- resources/views/empresa/disponibilidades/index.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Disponibilidades')
 
 @section('content')
   <h1 class="mb-4">Mis Slots de Disponibilidad</h1>
-
-  {{-- Mensaje de éxito --}}
-  @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-  @endif
 
   <a href="{{ route('empresa.disponibilidades.create') }}" class="btn btn-primary mb-3">
     Añadir slot

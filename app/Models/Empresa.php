@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-// Importa los demás modelos usados en las relaciones
 use App\Models\Usuario;
 use App\Models\Sector;
 use App\Models\Servicio;
@@ -45,9 +44,9 @@ class Empresa extends Model
     {
         return $this->belongsToMany(
             Servicio::class,
-            'empresas_servicios',
-            'empresa_id',
-            'servicio_id'
+            'empresas_servicios',  // nombre real de la tabla pivote
+            'empresa_id',          // FK en la tabla pivote que apunta a empresas
+            'servicio_id'          // FK en la tabla pivote que apunta a servicios
         );
     }
 
