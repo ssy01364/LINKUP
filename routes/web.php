@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\Cliente\ReservaController as ClienteReserva;  // ← Nuevo
+use App\Http\Controllers\Cliente\ReservaController as ClienteReserva;
 use App\Http\Controllers\Empresa\DashboardController   as EmpresaDash;
 use App\Http\Controllers\Empresa\DisponibilidadController as EmpresaDisp;
 use App\Http\Controllers\Empresa\CitaController        as EmpresaCita;
@@ -105,6 +105,17 @@ Route::middleware(['auth', 'role:empresa'])
          // c) CRUD disponibilidades (index, create, store, destroy)
          Route::resource('disponibilidades', EmpresaDisp::class)
               ->only(['index', 'create', 'store', 'destroy']);
+
+         // → Calendario de Disponibilidades y Citas
+         // Vista del calendario
+         Route::get('disponibilidades/calendar', [EmpresaDisp::class, 'calendar'])
+              ->name('disponibilidades.calendar');
+         // Endpoint JSON con slots y citas
+         Route::get('disponibilidades/events', [EmpresaDisp::class, 'events'])
+              ->name('disponibilidades.events');
+         // Listado de citas por día seleccionado
+         Route::get('disponibilidades/citas-por-dia', [EmpresaDisp::class, 'citasByDate'])
+              ->name('disponibilidades.citasDia');
 
          // d) Gestión de citas: listar, confirmar y cancelar
          Route::get('citas',                        [EmpresaCita::class, 'index'])

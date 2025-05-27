@@ -43,6 +43,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="{{ route('empresa.disponibilidades.calendar') }}">
+              Calendario
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ route('empresa.citas.index') }}">
               Citas
             </a>
