@@ -13,12 +13,29 @@ class Sector extends Model
 
     protected $table = 'sectores';
 
+    /**
+     * Campos asignables masivamente.
+     */
     protected $fillable = [
         'nombre',
+        'imagen',
     ];
 
+    /**
+     * Relación a Empresa.
+     */
     public function empresas(): HasMany
     {
         return $this->hasMany(Empresa::class, 'sector_id');
+    }
+
+    /**
+     * Accessor para obtener la URL completa de la imagen.
+     */
+    public function getImagenUrlAttribute(): ?string
+    {
+        return $this->imagen
+            ? asset('images/' . $this->imagen)
+            : null;
     }
 }
