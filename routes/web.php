@@ -15,13 +15,13 @@ use App\Http\Controllers\Empresa\ProfileController    as EmpresaProfile;
 |--------------------------------------------------------------------------
 |
 | Aquí defines las rutas que responden con vistas Blade para tu aplicación
-| web. Incluye autenticación, la ruta /home, el panel de cliente
+| web. Incluye la página de bienvenida, autenticación, el panel de cliente
 | y el panel de empresa (disponibilidades, citas, perfil).
 |
 */
 
-// 1) Redirige la raíz (/) al login
-Route::redirect('/', '/login');
+// 1) Página de bienvenida — accesible a todos
+Route::view('/', 'welcome')->name('welcome');
 
 // 2) Autenticación — solo para invitados
 Route::middleware('guest')->group(function () {
@@ -118,10 +118,10 @@ Route::middleware(['auth', 'role:empresa'])
               ->name('disponibilidades.citasDia');
 
          // d) Gestión de citas: listar, confirmar y cancelar
-         Route::get('citas',                        [EmpresaCita::class, 'index'])
+         Route::get('citas',                    [EmpresaCita::class, 'index'])
               ->name('citas.index');
-         Route::patch('citas/{cita}/confirmar',     [EmpresaCita::class, 'confirmar'])
+         Route::patch('citas/{cita}/confirmar', [EmpresaCita::class, 'confirmar'])
               ->name('citas.confirmar');
-         Route::patch('citas/{cita}/cancelar',      [EmpresaCita::class, 'cancelar'])
+         Route::patch('citas/{cita}/cancelar',  [EmpresaCita::class, 'cancelar'])
               ->name('citas.cancelar');
      });

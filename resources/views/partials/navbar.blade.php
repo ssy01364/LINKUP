@@ -1,7 +1,9 @@
 {{-- resources/views/partials/navbar.blade.php --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex justify-content-between align-items-center">
-    <a class="navbar-brand mb-0 h1" href="{{ url('/') }}">
+    {{-- Marca: invitados → welcome, autenticados → home --}}
+    <a class="navbar-brand mb-0 h1"
+       href="{{ auth()->check() ? route('home') : route('welcome') }}">
       {{ config('app.name') }}
     </a>
 
@@ -27,25 +29,37 @@
 
         @if($rol === 'cliente')
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('cliente.search.form') }}">Buscar</a>
+            <a class="nav-link" href="{{ route('cliente.search.form') }}">
+              Buscar
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('cliente.reservas.index') }}">Mis Reservas</a>
+            <a class="nav-link" href="{{ route('cliente.reservas.index') }}">
+              Mis Reservas
+            </a>
           </li>
         @endif
 
         @if($rol === 'empresa')
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('empresa.dashboard') }}">Dashboard</a>
+            <a class="nav-link" href="{{ route('empresa.dashboard') }}">
+              Dashboard
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('empresa.disponibilidades.index') }}">Disponibilidades</a>
+            <a class="nav-link" href="{{ route('empresa.disponibilidades.index') }}">
+              Disponibilidades
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('empresa.disponibilidades.calendar') }}">Calendario</a>
+            <a class="nav-link" href="{{ route('empresa.disponibilidades.calendar') }}">
+              Calendario
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('empresa.citas.index') }}">Citas</a>
+            <a class="nav-link" href="{{ route('empresa.citas.index') }}">
+              Citas
+            </a>
           </li>
         @endif
 
