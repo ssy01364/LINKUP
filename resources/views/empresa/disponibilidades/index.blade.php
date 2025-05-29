@@ -10,8 +10,8 @@
     Añadir slot
   </a>
 
-  <table class="table table-hover">
-    <thead>
+  <table class="table table-bordered">
+    <thead class="table-dark">
       <tr>
         <th>Inicio</th>
         <th>Fin</th>

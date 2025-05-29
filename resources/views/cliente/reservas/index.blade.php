@@ -14,7 +14,7 @@
   @endif
 
   <table class="table table-bordered">
-    <thead class="table-light">
+    <thead class="table-dark">
       <tr>
         <th>Empresa</th>
         <th>Servicio</th>

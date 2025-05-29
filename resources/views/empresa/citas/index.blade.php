@@ -7,7 +7,7 @@
   <h1 class="mb-4">Citas Recibidas</h1>
 
   <table class="table table-bordered">
-    <thead class="table-light">
+    <thead class="table-dark">
       <tr>
         <th>Cliente</th>
         <th>Servicio</th>

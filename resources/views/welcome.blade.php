@@ -78,13 +78,13 @@
   </section>
 
   {{-- Call to Action --}}
-  <section class="text-center py-5 cta-light">
+  <section class="text-center py-5 hero-light">
     <div class="container">
       <h2 class="mb-3">¿A qué esperas?</h2>
       <p class="mb-4">
         Únete a LinkUp y lleva la gestión de tus citas al siguiente nivel.
       </p>
-      <a href="{{ route('register') }}" class="btn btn-lg btn-cta">
+      <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg">
         Crear cuenta gratis
       </a>
     </div>

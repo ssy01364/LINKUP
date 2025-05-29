@@ -32,7 +32,7 @@
     /* Hero (welcome) */
     .hero-light {
       background-color: #f8f9fa;
-      color: #212529;
+      color:rgb(34, 35, 36);
     }
 
     /* Call to Action (footer welcome) */
@@ -102,20 +102,33 @@
       border-color: #f8f9fa !important;
     }
 
-    /* Tablas en oscuro */
-    body.dark-mode .table {
-      background-color: #2b2b2b;
-      color: #e0e0e0;
+    /* ----------------------------------------
+       Tablas en modo oscuro
+    ----------------------------------------- */
+    /* Tabla base */
+    body.dark-mode table {
+      background-color: transparent !important;
     }
-    body.dark-mode .table th,
-    body.dark-mode .table td {
-      border-color: #444;
+    /* Encabezado */
+    body.dark-mode table thead {
+      background-color: #333 !important;
     }
-    body.dark-mode .table thead {
-      background-color: #333;
+    body.dark-mode table thead th {
+      color: #e0e0e0 !important;
+      border-color: #444 !important;
     }
-    body.dark-mode .table tbody tr:nth-of-type(odd) {
-      background-color: #242424;
+    /* Filas */
+    body.dark-mode table tbody tr {
+      background-color: #2b2b2b !important;
+    }
+    body.dark-mode table tbody tr:nth-of-type(odd) {
+      background-color: #242424 !important;
+    }
+    /* Celdas */
+    body.dark-mode table th,
+    body.dark-mode table td {
+      color:rgb(17, 16, 16) !important;
+      border-color: #444 !important;
     }
   </style>
 
