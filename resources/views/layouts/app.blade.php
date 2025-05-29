@@ -29,10 +29,10 @@
       color: #212529;
     }
 
-    /* Hero (welcome) */
+    /* Hero (welcome): un gris suave para que destaque */
     .hero-light {
-      background-color: #f8f9fa;
-      color:rgb(34, 35, 36);
+      background-color: #e9ecef;     /* ⚡ aquí el cambio */
+      color: rgb(34, 35, 36);
     }
 
     /* Call to Action (footer welcome) */
@@ -54,8 +54,6 @@
     .btn-outline-secondary:hover {
       background-color: #e2e6ea;
     }
-
-    /* Tablas en claro (bootstrap por defecto) */
 
 
     /* ----------------------------------------
@@ -105,31 +103,55 @@
     /* ----------------------------------------
        Tablas en modo oscuro
     ----------------------------------------- */
-    /* Tabla base */
     body.dark-mode table {
       background-color: transparent !important;
     }
-    /* Encabezado */
-    body.dark-mode table thead {
+    body.dark-mode thead {
       background-color: #333 !important;
     }
-    body.dark-mode table thead th {
+    body.dark-mode thead th {
       color: #e0e0e0 !important;
       border-color: #444 !important;
     }
-    /* Filas */
-    body.dark-mode table tbody tr {
+    body.dark-mode tbody tr {
       background-color: #2b2b2b !important;
     }
-    body.dark-mode table tbody tr:nth-of-type(odd) {
+    body.dark-mode tbody tr:nth-of-type(odd) {
       background-color: #242424 !important;
     }
-    /* Celdas */
-    body.dark-mode table th,
-    body.dark-mode table td {
-      color:rgb(17, 16, 16) !important;
+    body.dark-mode th,
+    body.dark-mode td {
+      color: #e0e0e0 !important;   /* texto claro */
       border-color: #444 !important;
     }
+    
+    /* ----------------------------------------
+   Footer
+----------------------------------------- */
+/* Modo claro: un gris oscuro */
+.footer-light {
+  background-color: #343a40;    /* más oscuro que el cta-light */
+  color: #e9ecef;
+}
+/* Texto de enlace, si lo hubiera */
+.footer-light a {
+  color: #adb5bd;
+}
+.footer-light a:hover {
+  color: #fff;
+}
+
+/* Modo oscuro: aún más oscuro */
+body.dark-mode .footer-light {
+  background-color: #1a1a1a !important;
+  color: #ced4da !important;
+}
+body.dark-mode .footer-light a {
+  color: #888 !important;
+}
+body.dark-mode .footer-light a:hover {
+  color: #e0e0e0 !important;
+}
   </style>
 
   @stack('styles')
@@ -162,5 +184,7 @@
   </script>
 
   @stack('scripts')
+  {{-- Incluimos el footer --}}
+  @include('partials.footer')
 </body>
 </html>
