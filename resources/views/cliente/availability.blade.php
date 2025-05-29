@@ -26,8 +26,8 @@
       @if($slots->isEmpty())
         <p>No hay slots disponibles.</p>
       @else
-        <table class="table">
-          <thead>
+        <table class="table table-bordered">
+          <thead class="table-dark">
             <tr>
               <th>Inicio</th>
               <th>Fin</th>

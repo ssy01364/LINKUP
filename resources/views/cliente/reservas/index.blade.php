@@ -1,17 +1,10 @@
+{{-- resources/views/cliente/reservas/index.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Mis Reservas')
 
 @section('content')
   <h1 class="mb-4">Mis Reservas</h1>
-
-  {{-- Flash --}}
-  @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('success') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  @endif
 
   <table class="table table-bordered">
     <thead class="table-dark">
