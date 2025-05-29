@@ -5,7 +5,7 @@
 
 @section('content')
   {{-- Hero --}}
-  <section class="text-center py-5 bg-light">
+  <section class="text-center py-5 hero-light">
     <div class="container">
       <h1 class="display-4 mb-3">¡Bienvenido a LinkUp!</h1>
       <p class="lead mb-4">
@@ -21,7 +21,7 @@
   </section>
 
   {{-- Qué ofrecemos --}}
-  <section class="py-5">
+  <section class="py-5 bg-transparent">
     <div class="container">
       <h2 class="mb-4 text-center">¿Qué puedes hacer en LinkUp?</h2>
       <div class="row g-4">
@@ -78,13 +78,15 @@
   </section>
 
   {{-- Call to Action --}}
-  <section class="text-center py-5 bg-secondary text-white">
+  <section class="text-center py-5 cta-light">
     <div class="container">
       <h2 class="mb-3">¿A qué esperas?</h2>
       <p class="mb-4">
         Únete a LinkUp y lleva la gestión de tus citas al siguiente nivel.
       </p>
-      <a href="{{ route('register') }}" class="btn btn-light btn-lg">Crear cuenta gratis</a>
+      <a href="{{ route('register') }}" class="btn btn-lg btn-cta">
+        Crear cuenta gratis
+      </a>
     </div>
   </section>
 @endsection

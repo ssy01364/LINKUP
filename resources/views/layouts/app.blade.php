@@ -14,36 +14,108 @@
 
   {{-- Dark/Light Mode CSS --}}
   <style>
-    /* Light mode (por defecto): blanco y texto negro */
+    /* ----------------------------------------
+       Modo claro (por defecto)
+    ----------------------------------------- */
     body {
       background-color: #ffffff;
       color: #000000;
     }
+    .navbar {
+      background-color: #f8f9fa;
+    }
+    .navbar .nav-link,
+    .navbar-brand {
+      color: #212529;
+    }
 
-    /* Dark mode: fondo gris muy oscuro, texto claro */
+    /* Hero (welcome) */
+    .hero-light {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+
+    /* Call to Action (footer welcome) */
+    .cta-light {
+      background-color: #6c757d;
+      color: #ffffff;
+    }
+    .cta-light .btn-cta {
+      background-color: #ffffff;
+      color: #6c757d;
+      border: 1px solid #ffffff;
+    }
+
+    /* Botones outline-secondary en claro */
+    .btn-outline-secondary {
+      color: #6c757d;
+      border-color: #6c757d;
+    }
+    .btn-outline-secondary:hover {
+      background-color: #e2e6ea;
+    }
+
+    /* Tablas en claro (bootstrap por defecto) */
+
+
+    /* ----------------------------------------
+       Modo oscuro
+    ----------------------------------------- */
     body.dark-mode {
       background-color: #1e1e1e !important;
       color: #e0e0e0 !important;
     }
 
-    /* Navbar en dark mode */
+    /* Navbar en oscuro */
     body.dark-mode .navbar {
       background-color: #2b2b2b !important;
     }
-    /* Enlaces y marca en dark mode */
     body.dark-mode .navbar .nav-link,
     body.dark-mode .navbar-brand {
       color: #f8f9fa !important;
     }
 
-    /* Botones outline deben también invertirse */
+    /* Hero en oscuro */
+    body.dark-mode .hero-light {
+      background-color: #2b2b2b !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* Call to Action en oscuro */
+    body.dark-mode .cta-light {
+      background-color: #444 !important;
+      color: #e0e0e0 !important;
+    }
+    body.dark-mode .cta-light .btn-cta {
+      background-color: #e0e0e0 !important;
+      color: #1e1e1e !important;
+      border-color: #e0e0e0 !important;
+    }
+
+    /* Btn outline-secondary en oscuro */
     body.dark-mode .btn-outline-secondary {
-      color: #f8f9fa;
-      border-color: #f8f9fa;
+      color: #f8f9fa !important;
+      border-color: #f8f9fa !important;
     }
     body.dark-mode .btn-outline-secondary:hover {
-      background-color: #444;
-      border-color: #f8f9fa;
+      background-color: #444 !important;
+      border-color: #f8f9fa !important;
+    }
+
+    /* Tablas en oscuro */
+    body.dark-mode .table {
+      background-color: #2b2b2b;
+      color: #e0e0e0;
+    }
+    body.dark-mode .table th,
+    body.dark-mode .table td {
+      border-color: #444;
+    }
+    body.dark-mode .table thead {
+      background-color: #333;
+    }
+    body.dark-mode .table tbody tr:nth-of-type(odd) {
+      background-color: #242424;
     }
   </style>
 
