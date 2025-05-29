@@ -31,7 +31,7 @@
 
     /* Hero (welcome): un gris suave para que destaque */
     .hero-light {
-      background-color: #e9ecef;     /* ⚡ aquí el cambio */
+      background-color: #e9ecef;
       color: rgb(34, 35, 36);
     }
 
@@ -54,7 +54,6 @@
     .btn-outline-secondary:hover {
       background-color: #e2e6ea;
     }
-
 
     /* ----------------------------------------
        Modo oscuro
@@ -121,48 +120,50 @@
     }
     body.dark-mode th,
     body.dark-mode td {
-      color: #e0e0e0 !important;   /* texto claro */
+      color: #e0e0e0 !important;
       border-color: #444 !important;
     }
-    
-    /* ----------------------------------------
-   Footer
------------------------------------------ */
-/* Modo claro: un gris oscuro */
-.footer-light {
-  background-color: #343a40;    /* más oscuro que el cta-light */
-  color: #e9ecef;
-}
-/* Texto de enlace, si lo hubiera */
-.footer-light a {
-  color: #adb5bd;
-}
-.footer-light a:hover {
-  color: #fff;
-}
 
-/* Modo oscuro: aún más oscuro */
-body.dark-mode .footer-light {
-  background-color: #1a1a1a !important;
-  color: #ced4da !important;
-}
-body.dark-mode .footer-light a {
-  color: #888 !important;
-}
-body.dark-mode .footer-light a:hover {
-  color: #e0e0e0 !important;
-}
+    /* ----------------------------------------
+       Footer
+    ----------------------------------------- */
+    .footer-light {
+      background-color: #343a40;
+      color: #e9ecef;
+    }
+    .footer-light a {
+      color: #adb5bd;
+    }
+    .footer-light a:hover {
+      color: #fff;
+    }
+    body.dark-mode .footer-light {
+      background-color: #1a1a1a !important;
+      color: #ced4da !important;
+    }
+    body.dark-mode .footer-light a {
+      color: #888 !important;
+    }
+    body.dark-mode .footer-light a:hover {
+      color: #e0e0e0 !important;
+    }
   </style>
 
   @stack('styles')
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   @include('partials.navbar')
 
-  <div class="container py-4">
-    @include('partials.alerts')
-    @yield('content')
-  </div>
+  {{-- Contenido principal --}}
+  <main class="flex-grow-1">
+    <div class="container py-4">
+      @include('partials.alerts')
+      @yield('content')
+    </div>
+  </main>
+
+  {{-- Footer siempre abajo --}}
+  @include('partials.footer')
 
   {{-- Bootstrap JS Bundle CDN --}}
   <script
@@ -184,7 +185,5 @@ body.dark-mode .footer-light a:hover {
   </script>
 
   @stack('scripts')
-  {{-- Incluimos el footer --}}
-  @include('partials.footer')
 </body>
 </html>
