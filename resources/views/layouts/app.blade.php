@@ -120,7 +120,7 @@
     }
     body.dark-mode th,
     body.dark-mode td {
-      color: #e0e0e0 !important;
+      color:rgb(5, 10, 43) !important;
       border-color: #444 !important;
     }
 
